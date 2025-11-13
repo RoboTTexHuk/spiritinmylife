@@ -1,0 +1,709 @@
+<!DOCTYPE html><html lang="ru"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+  <meta name="x-poe-datastore-behavior" content="local_only">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+  <title>PastLife Insight - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&amp;family=Poppins:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <script>window.FontAwesomeConfig={autoReplaceSvg:'nest'};</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-dark': '#1A182E',
+            'brand-purple': '#2E2A5C',
+            'brand-light-purple': '#4D478D',
+            'brand-gold': '#D98E3A',
+            'brand-light-gold': '#F0B86E',
+            'brand-text': '#E0DDF2',
+            'brand-text-muted': '#A09CB9',
+          },
+          fontFamily: { 'display': ['Cinzel','serif'], 'body': ['Poppins','sans-serif'] },
+          boxShadow: {
+            'gold-glow': '0 0 15px 5px rgba(217,142,58,0.3)',
+            'purple-glow': '0 0 20px 8px rgba(77,71,141,0.4)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --app-max-width: 420px;
+      --nav-height: 80px;
+      --pad-h: 16px;
+    }
+    @media (min-width: 768px) {
+      :root {
+        --app-max-width: 720px;
+        --nav-height: 86px;
+        --pad-h: 24px;
+      }
+    }
+    * { -webkit-tap-highlight-color: transparent; }
+    ::-webkit-scrollbar { display: none; }
+    .text-glow { text-shadow: 0 0 8px rgba(240,184,110,0.5); }
+    .active-tab { color: #F0B86E !important; }
+    .hidden-el { display: none !important; }
+    .chip { border: 1px solid rgba(240,184,110,0.35); border-radius: 9999px; padding: 2px 10px; font-size: 12px; }
+    .btn-gold { background-image: linear-gradient(to right, #D98E3A, #F0B86E); color: #1A182E; }
+    .btn-gold:hover { box-shadow: 0 0 15px 5px rgba(217,142,58,0.3); }
+    .pressable:active { transform: translateY(1px); opacity: 0.95; }
+    body { background: #1A182E; }
+    #app-root {
+      position: relative;
+      height: 100dvh; min-height: 100dvh; width: 100%;
+      display: flex; justify-content: center; align-items: stretch;
+      padding-left: max(0px, env(safe-area-inset-left));
+      padding-right: max(0px, env(safe-area-inset-right));
+      padding-top: max(0px, env(safe-area-inset-top));
+      padding-bottom: max(0px, env(safe-area-inset-bottom));
+    }
+    #mobile-app-container {
+      position: relative;
+      width: 100%;
+      max-width: var(--app-max-width);
+      background: #1A182E;
+      box-shadow: 0 12px 40px rgba(0,0,0,.45);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    #main-content {
+      position: relative;
+      height: 100%;
+      max-height: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom) + 16px);
+    }
+    #bottom-nav {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: max(0px, env(safe-area-inset-bottom));
+      width: 100%;
+      max-width: var(--app-max-width);
+      z-index: 40;
+      background: rgba(46,42,92,0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(77,71,141,0.5);
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+    #bottom-nav .nav-inner { height: var(--nav-height); }
+    #toaster {
+      position: fixed; left: 50%; transform: translateX(-50%);
+      bottom: calc(var(--nav-height) + env(safe-area-inset-bottom) + 8px);
+      z-index: 50; display: flex; flex-direction: column; gap: 8px;
+      width: min(92vw, 420px); pointer-events: none;
+    }
+    .toast {
+      pointer-events: auto;
+      border: 1px solid rgba(240,184,110,.4);
+      background: rgba(46,42,92,.95);
+      color: #E0DDF2;
+      padding: 10px 12px; border-radius: 10px;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,.35);
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .toast-success { border-color: rgba(57,201,114,.5); }
+    .toast-error { border-color: rgba(244,67,54,.55); }
+
+    /* Модалка вынесена в конец body и имеет самый высокий z-index */
+    #modalAddRoot {
+      position: fixed; inset: 0; z-index: 999; /* выше, чем bottom-nav (40) и тосты (50) */
+      display: none;
+    }
+    #modalAddRoot.active { display: flex; }
+
+    /* Фон модалки НЕ принимает клики (как просили: не закрывает и не перехватывает) */
+    #modalBackdrop {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.6);
+      pointer-events: none;
+    }
+    #modalSheet {
+      position: relative;
+      width: 100%; max-width: 420px;
+      margin-left: auto; margin-right: auto;
+      background: #2E2A5C;
+      border-top-left-radius: 16px; border-top-right-radius: 16px;
+      border-top: 1px solid rgba(77,71,141,0.5);
+      padding: 16px;
+      box-shadow: 0 -12px 30px rgba(0,0,0,.45);
+      transform: translateY(0);
+    }
+    /* Контейнер расположения модалки внизу, с учётом safe-area */
+    #modalAddRoot .sheet-wrap {
+      position: absolute; left: 0; right: 0;
+      bottom: max(0px, env(safe-area-inset-bottom));
+      display: flex; justify-content: center; align-items: flex-end;
+      padding: 0 12px;
+    }
+  </style>
+  <script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.3f7572448765332f3047.js"></script>
+  <script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.3f7572448765332f3047.js"></script></head>
+<body class="font-body text-brand-text">
+<div id="app-root">
+  <div id="mobile-app-container" class="mx-auto bg-brand-dark overflow-hidden relative rounded-lg">
+
+    <main id="main-content" class="h-full overflow-y-auto">
+      <header id="header" class="flex justify-between items-center px-[var(--pad-h)] pt-6 pb-4 bg-brand-dark/80 backdrop-blur-sm sticky top-0 z-10">
+        <div class="flex items-center space-x-3"></div>
+        <button id="btnSettings" class="text-brand-text-muted hover:text-brand-light-gold transition-colors" title="Settings" type="button" aria-label="Settings">
+          <i class="fa-solid fa-gear text-xl"></i>
+        </button>
+      </header>
+
+      <section id="screen-persona" class="px-[var(--pad-h)] py-6">
+        <p class="font-display text-sm uppercase tracking-widest text-brand-text-muted text-center">Your Current Archetype</p>
+        <div class="relative mt-4">
+          <div class="absolute inset-0 bg-brand-purple rounded-full blur-3xl opacity-50"></div>
+          <div class="relative w-48 h-48 mx-auto border-4 border-brand-gold rounded-full shadow-gold-glow p-1">
+            <div class="w-full h-full rounded-full overflow-hidden">
+              <img id="personaImage" class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/5192d38e03-b6c0ce517b37fcb10d24.png" alt="Archetype image">
+            </div>
+          </div>
+        </div>
+        <h2 id="personaTitle" class="font-display text-4xl font-bold mt-6 text-glow text-brand-light-gold text-center">The Mystic</h2>
+        <p id="personaDesc" class="mt-2 text-brand-text-muted text-sm max-w-xs mx-auto text-center">Your notes on introspection and photos with serene expressions reveal the soul of a Mystic.</p>
+        <div class="mt-4 bg-brand-purple/50 rounded-lg px-4 py-2 mx-auto inline-flex items-center space-x-2 border border-brand-light-purple">
+          <i class="fa-solid fa-brain text-brand-light-gold"></i>
+          <span id="personaConfidence" class="text-sm font-semibold">88% Confidence</span>
+        </div>
+        <div id="personaChips" class="mt-5 flex flex-wrap justify-center gap-2"></div>
+
+        <section id="add-note-cta" class="px-0 mt-8">
+          <button id="btnAdd" class="w-full btn-gold font-bold py-4 rounded-lg shadow-lg transition-shadow duration-300 flex items-center justify-center space-x-3 pressable" type="button">
+            <i class="fa-solid fa-plus-circle"></i>
+            <span>Add New Insight or Photo</span>
+          </button>
+        </section>
+
+        <section id="timeline-highlights" class="px-0 mt-8">
+          <h3 class="font-display text-lg font-bold text-brand-text">Recent Shifts</h3>
+          <div id="recentShifts" class="mt-4 space-y-3"></div>
+        </section>
+      </section>
+
+      <section id="screen-timeline" class="px-[var(--pad-h)] py-6 hidden-el">
+        <h3 class="font-display text-xl font-bold">Timeline</h3>
+        <p class="text-brand-text-muted text-sm mt-1">Archetype changes and key events.</p>
+        <div id="timelineList" class="mt-4 space-y-3"></div>
+      </section>
+
+      <section id="screen-notes" class="px-[var(--pad-h)] py-6 hidden-el">
+        <h3 class="font-display text-xl font-bold">Notes</h3>
+        <p class="text-brand-text-muted text-sm mt-1">Your thoughts influence the archetype.</p>
+        <div class="mt-4 bg-brand-purple p-4 rounded-lg border border-brand-light-purple/50">
+          <label class="text-sm text-brand-text-muted">New Note</label>
+          <textarea id="noteText" class="mt-2 w-full bg-brand-dark/60 border border-brand-light-purple/50 rounded-md p-3 outline-none focus:ring-2 focus:ring-brand-light-gold text-brand-text" rows="3" placeholder="Write your insights..."></textarea>
+          <div class="flex items-center mt-3 gap-3">
+            <select id="noteMood" class="bg-brand-dark/60 border border-brand-light-purple/50 rounded-md p-2 text-brand-text text-sm">
+              <option value="">Mood (auto)</option>
+              <option>Positive</option>
+              <option>Neutral</option>
+              <option>Negative</option>
+            </select>
+            <button id="btnSaveNote" class="ml-auto btn-gold rounded-md px-4 py-2 font-semibold text-sm pressable" type="button">Save Note</button>
+          </div>
+        </div>
+        <div id="notesList" class="mt-4 space-y-3"></div>
+      </section>
+
+      <section id="screen-analyze" class="px-[var(--pad-h)] py-6 hidden-el">
+        <h3 class="font-display text-xl font-bold">Analyze</h3>
+        <p class="text-brand-text-muted text-sm mt-1">Add a photo to enrich your archetype reading.</p>
+        <div class="mt-4 bg-brand-purple p-4 rounded-lg border border-brand-light-purple/50">
+          <div class="flex items-center gap-3">
+            <label for="photoInput" class="btn-gold rounded-md px-4 py-2 font-semibold text-sm cursor-pointer pressable">
+              <i class="fa-solid fa-camera mr-2"></i>Upload Photo
+            </label>
+            <input id="photoInput" type="file" accept="image/*" class="hidden">
+            <button id="btnAnalyze" class="ml-auto bg-brand-light-purple text-brand-text rounded-md px-4 py-2 font-semibold text-sm hover:shadow-purple-glow pressable" type="button">
+              <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Analyze
+            </button>
+          </div>
+          <div id="analyzePreview" class="mt-4 hidden-el">
+            <div class="w-full h-48 rounded-lg overflow-hidden border border-brand-light-purple/50">
+              <img id="analyzeImg" src="" alt="Preview" class="w-full h-full object-cover">
+            </div>
+            <div id="analyzeTags" class="mt-3 flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+        <div class="mt-6 bg-brand-purple/50 rounded-lg px-4 py-3 border border-brand-light-purple">
+          <h4 class="font-semibold">Current Features</h4>
+          <ul id="featureList" class="text-sm text-brand-text-muted mt-2 list-disc pl-5">
+            <li>Face/portrait detection (heuristic)</li>
+            <li>Smile hint (mouth curvature heuristic)</li>
+            <li>Outdoor/indoor hint (brightness)</li>
+            <li>Colorfulness/style tags</li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav id="bottom-nav" class="bg-brand-purple/80">
+      <div class="nav-inner flex justify-around items-center px-3">
+        <a href="#persona" id="tab-persona" class="text-center text-brand-light-gold group" aria-label="Persona">
+          <i class="fa-solid fa-user-circle text-2xl"></i>
+          <span class="block text-xs mt-1 font-semibold">Persona</span>
+        </a>
+        <a href="#timeline" id="tab-timeline" class="text-center text-brand-text-muted hover:text-brand-light-gold transition-colors group" aria-label="Timeline">
+          <i class="fa-solid fa-timeline text-2xl"></i>
+          <span class="block text-xs mt-1">Timeline</span>
+        </a>
+        <a href="#notes" id="tab-notes" class="text-center text-brand-text-muted hover:text-brand-light-gold transition-colors group" aria-label="Notes">
+          <i class="fa-solid fa-book-open text-2xl"></i>
+          <span class="block text-xs mt-1">Notes</span>
+        </a>
+        <a href="#analyze" id="tab-analyze" class="text-center text-brand-text-muted hover:text-brand-light-gold transition-colors group" aria-label="Analyze">
+          <i class="fa-solid fa-camera-retro text-2xl"></i>
+          <span class="block text-xs mt-1">Analyze</span>
+        </a>
+      </div>
+    </nav>
+
+    <div id="toaster"></div>
+
+  </div>
+</div>
+
+<!-- МОДАЛКА В КОНЕЦ BODY: ВСЕГДА НАД BOTTOM NAV -->
+<div id="modalAddRoot" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div id="modalBackdrop"></div>
+  <div class="sheet-wrap">
+    <div id="modalSheet">
+      <div class="flex items-center justify-between">
+        <h4 id="modalTitle" class="font-display font-bold">Add Insight or Photo</h4>
+        <button id="btnModalClose" class="text-brand-text-muted hover:text-brand-light-gold" type="button" aria-label="Close modal">
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
+      <div class="mt-3 space-y-3">
+        <textarea id="modalNoteText" rows="3" class="w-full bg-brand-dark/60 border border-brand-light-purple/50 rounded-md p-3 outline-none focus:ring-2 focus:ring-brand-light-gold text-brand-text" placeholder="Write a quick note..."></textarea>
+        <div class="flex items-center gap-3">
+          <label for="modalPhotoInput" class="btn-gold rounded-md px-4 py-2 font-semibold text-sm cursor-pointer pressable">
+            <i class="fa-solid fa-camera mr-2"></i>Add Photo
+          </label>
+          <input id="modalPhotoInput" type="file" accept="image/*" class="hidden">
+          <select id="modalMood" class="ml-auto bg-brand-dark/60 border border-brand-light-purple/50 rounded-md p-2 text-brand-text text-sm">
+            <option value="">Mood (auto)</option>
+            <option>Positive</option>
+            <option>Neutral</option>
+            <option>Negative</option>
+          </select>
+        </div>
+        <div id="modalPreview" class="hidden-el w-full h-40 rounded-lg overflow-hidden border border-brand-light-purple/50">
+          <img id="modalImg" src="" alt="Preview" class="w-full h-full object-cover">
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="btnModalSave" class="flex-1 btn-gold rounded-md py-3 font-bold pressable" type="button">Save</button>
+          <button id="btnModalCancel" class="flex-1 bg-brand-dark text-brand-text border border-brand-light-purple rounded-md py-3 font-semibold hover:bg-brand-purple/60 pressable" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Toast
+  function toast(msg, type='info', ms=2000) {
+    const t = document.createElement('div');
+    t.className = 'toast ' + (type==='success'?'toast-success': type==='error'?'toast-error':'');
+    t.innerHTML = `
+      <i class="fa-solid ${type==='success'?'fa-circle-check': type==='error'?'fa-triangle-exclamation':'fa-circle-info'} text-brand-light-gold"></i>
+      <span class="text-sm">${escapeHtml(msg)}</span>
+    `;
+    $('toaster').appendChild(t);
+    requestAnimationFrame(()=>{ t.style.opacity='1'; t.style.transform='translateY(0)'; });
+    setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateY(6px)'; setTimeout(()=>t.remove(),250); }, ms);
+  }
+
+  // Safe store
+  const SafeStore = (() => {
+    let enabled = false;
+    try { const k='__t__'+Math.random(); localStorage.setItem(k,'1'); localStorage.removeItem(k); enabled = true; } catch {}
+    const memory = {};
+    return {
+      get enabled(){ return enabled; },
+      load(k){ try { return enabled ? JSON.parse(localStorage.getItem(k)||'null') : (memory[k]?JSON.parse(memory[k]):null); } catch { return null; } },
+      save(k,v){ const s = JSON.stringify(v); if (enabled) { try { localStorage.setItem(k,s); return; } catch {} } memory[k]=s; }
+    }
+  })();
+
+  const STORAGE_KEY = 'pli-data';
+  const Store = {
+    load(){ return SafeStore.load(STORAGE_KEY) || {}; },
+    save(d){ SafeStore.save(STORAGE_KEY, d); },
+    init(){
+      const d = this.load();
+      if (!d.user) d.user = { name: 'Elara', avatar: 'https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg' };
+      if (!d.notes) d.notes = [];
+      if (!d.photos) d.photos = [];
+      if (!d.archetypeHistory) d.archetypeHistory = [];
+      if (!d.current) d.current = { type: 'The Mystic', confidence: 0.88, reason: 'Introspection notes and serene photos', chips: ['spirituality','introspection'], key:'Mystic' };
+      this.save(d);
+      return d;
+    }
+  };
+
+  function analyzeText(text) {
+    const t = (text||'').toLowerCase();
+    const topics = [];
+    const dict = [
+      ['travel','journey','explore','trip','adventure'],
+      ['study','learn','book','research','read'],
+      ['heal','care','help','nurse','support'],
+      ['lead','team','manage','guide','organize'],
+      ['spirit','meditat','mystic','oracle','ritual','soul'],
+      ['trade','market','sale','deal','business','shop'],
+      ['protect','guard','secure','defend','safety'],
+      ['perform','stage','music','dance','sing','theater']
+    ];
+    const labels = ['travel','study','caregiving','leadership','spirituality','trade','protection','performance'];
+    dict.forEach((arr,i)=>{ if (arr.some(k=>t.includes(k))) topics.push(labels[i]); });
+    const pos = ['love','great','good','happy','calm','peace','joy','excited'];
+    const neg = ['sad','bad','angry','worried','tired','anxious','stress','fear'];
+    let score = 0; pos.forEach(w=>{ if(t.includes(w)) score+=1; }); neg.forEach(w=>{ if(t.includes(w)) score-=1; });
+    const sentiment = Math.max(-1, Math.min(1, score/5));
+    return { topics:[...new Set(topics)], sentiment };
+  }
+
+  async function analyzeImageDataUrl(dataUrl) {
+    const img = new Image(); img.src = dataUrl; await img.decode();
+    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d', { willReadFrequently:true });
+    const W=128,H=128; canvas.width=W; canvas.height=H; ctx.drawImage(img,0,0,W,H);
+    const { data } = ctx.getImageData(0,0,W,H);
+    let sum=0, colorVar=0, prev=null;
+    for (let i=0;i<data.length;i+=4){ const r=data[i],g=data[i+1],b=data[i+2]; const lum=0.2126*r+0.7152*g+0.0722*b; sum+=(r+g+b)/3; if(prev!==null) colorVar+=Math.abs(lum-prev); prev=lum; }
+    const brightness = sum/(W*H)/255; const colorful = Math.min(1, colorVar/(W*H)/50);
+    let centerVar=0; const y=Math.floor(H*0.6); let last=null;
+    for (let x=0;x<W;x++){ const idx=(y*W+x)*4; const r=data[idx],g=data[idx+1],b=data[idx+2]; const l=0.2126*r+0.7152*g+0.0722*b; if(last!==null) centerVar+=Math.abs(l-last); last=l; }
+    const portrait = colorful < 0.25; const smile = centerVar > 2500; const outdoors = brightness > 0.62;
+    const tags = []; if(portrait) tags.push('portrait'); if(smile) tags.push('smile'); if(outdoors) tags.push('outdoors'); tags.push(colorful>0.4?'vibrant':'muted');
+    return { brightness, colorful, portrait, smile, outdoors, tags };
+  }
+
+  const ARCHETYPES = [
+    { key:'Explorer', title:'The Explorer' },
+    { key:'Healer', title:'The Healer' },
+    { key:'Scholar', title:'The Scholar' },
+    { key:'Artisan', title:'The Artisan' },
+    { key:'Leader', title:'The Leader' },
+    { key:'Mystic', title:'The Mystic' },
+    { key:'Merchant', title:'The Merchant' },
+    { key:'Guardian', title:'The Guardian' },
+    { key:'Performer', title:'The Performer' }
+  ];
+
+  function computeArchetype(state) {
+    const topicsCount = {}; let sentimentSum=0;
+    state.notes.forEach(n=>{ (n.topics||[]).forEach(t=>topicsCount[t]=(topicsCount[t]||0)+1); sentimentSum+=(n.sentiment||0); });
+    const sentimentTrend = state.notes.length ? sentimentSum/state.notes.length : 0;
+    const photoTags = {}; state.photos.forEach(p=>(p.tags||[]).forEach(t=>photoTags[t]=(photoTags[t]||0)+1));
+    function scoreFor(key){ let s=0;
+      if (key==='Explorer') s += 0.4*(topicsCount['travel']||0)+0.2*(photoTags['outdoors']||0)+0.2*Math.max(0,sentimentTrend);
+      if (key==='Healer') s += 0.6*(topicsCount['caregiving']||0)+0.1*Math.max(0,sentimentTrend);
+      if (key==='Scholar') s += 0.6*(topicsCount['study']||0);
+      if (key==='Artisan') s += 0.3*(photoTags['vibrant']||0);
+      if (key==='Leader') s += 0.6*(topicsCount['leadership']||0);
+      if (key==='Mystic') s += 0.6*(topicsCount['spirituality']||0)+0.1*(photoTags['muted']||0);
+      if (key==='Merchant') s += 0.6*(topicsCount['trade']||0);
+      if (key==='Guardian') s += 0.6*(topicsCount['protection']||0);
+      if (key==='Performer') s += 0.6*(topicsCount['performance']||0)+0.2*(photoTags['vibrant']||0);
+      return s;
+    }
+    const scores = ARCHETYPES.map(a=>({ key:a.key, s:scoreFor(a.key) }));
+    const max = Math.max(...scores.map(x=>x.s), 1e-6);
+    const exp = scores.map(x=>({ key:x.key, e:Math.exp(x.s - max) }));
+    const sum = exp.reduce((acc,x)=>acc+x.e,0);
+    const probs = exp.map(x=>({ key:x.key, p:x.e/sum })).sort((a,b)=>b.p-a.p);
+    const best = probs[0];
+    const chips = [];
+    const featureMap = {
+      travel:(topicsCount['travel']||0)>0, spirituality:(topicsCount['spirituality']||0)>0,
+      caregiving:(topicsCount['caregiving']||0)>0, study:(topicsCount['study']||0)>0,
+      leadership:(topicsCount['leadership']||0)>0, trade:(topicsCount['trade']||0)>0,
+      protection:(topicsCount['protection']||0)>0, performance:(topicsCount['performance']||0)>0,
+      outdoors:(photoTags['outdoors']||0)>0, vibrant:(photoTags['vibrant']||0)>0, muted:(photoTags['muted']||0)>0
+    };
+    Object.entries(featureMap).forEach(([k,v])=>{ if(v) chips.push(k); });
+    const title = ARCHETYPES.find(a=>a.key===best.key)?.title || 'The Mystic';
+    const reasons = [];
+    if (featureMap.spirituality) reasons.push('spirituality in notes');
+    if (featureMap.travel) reasons.push('travel themes');
+    if (featureMap.outdoors) reasons.push('outdoor photos');
+    if (featureMap.performance) reasons.push('stage/performing hints');
+    if (featureMap.leadership) reasons.push('leadership mentions');
+    if (featureMap.caregiving) reasons.push('care/support mentions');
+    if (featureMap.study) reasons.push('study/research mentions');
+    if (featureMap.trade) reasons.push('trade/business mentions');
+    if (featureMap.protection) reasons.push('protection/security mentions');
+    if (featureMap.vibrant) reasons.push('vibrant photo style');
+    if (featureMap.muted) reasons.push('muted photo style');
+    const confidence = Math.max(0.5, best.p);
+    return { type:title, key:best.key, confidence, chips, reason: reasons.slice(0,3).join(', ') || 'balanced signals' };
+  }
+
+  const $ = (id)=>document.getElementById(id);
+  const screens = {
+    persona: $('screen-persona'),
+    timeline: $('screen-timeline'),
+    notes: $('screen-notes'),
+    analyze: $('screen-analyze')
+  };
+  const tabs = {
+    persona: $('tab-persona'),
+    timeline: $('tab-timeline'),
+    notes: $('tab-notes'),
+    analyze: $('tab-analyze')
+  };
+
+  let app = Store.init();
+
+  function setActiveTab(which) {
+    Object.values(screens).forEach(s=>s.classList.add('hidden-el'));
+    screens[which].classList.remove('hidden-el');
+    Object.values(tabs).forEach(t=>t.classList.remove('active-tab'));
+    tabs[which].classList.add('active-tab');
+    if (which==='persona') renderPersona();
+    if (which==='timeline') renderTimeline();
+    if (which==='notes') renderNotes();
+  }
+
+  function renderPersona() {
+    // опционально: имя пользователю
+    // $('username') может отсутствовать в DOM — просто игнор
+    const c = app.current;
+    $('personaTitle').textContent = c.type;
+    $('personaDesc').textContent = c.reason ? `Signals suggest ${c.type.toLowerCase()}: ${c.reason}.` : 'Your signals are forming.';
+    $('personaConfidence').textContent = `${Math.round((c.confidence||0.7)*100)}% Confidence`;
+    const chipsWrap = $('personaChips'); chipsWrap.innerHTML = '';
+    (c.chips||[]).forEach(ch=>{ const span=document.createElement('span'); span.className='chip text-brand-light-gold'; span.textContent=ch; chipsWrap.appendChild(span); });
+    renderRecentShifts();
+  }
+
+  function renderRecentShifts() {
+    const wrap = $('recentShifts'); wrap.innerHTML='';
+    const history = [...(app.archetypeHistory||[])].sort((a,b)=>b.ts-a.ts).slice(0,4);
+    if(history.length===0){
+      const empty=document.createElement('div'); empty.className='text-brand-text-muted text-sm';
+      empty.textContent='No shifts yet. Add notes or analyze a photo to see changes.'; wrap.appendChild(empty); return;
+    }
+    history.forEach((h,i)=>{
+      const icon = h.key==='Explorer'?'fa-compass': h.key==='Scholar'?'fa-scroll': h.key==='Mystic'?'fa-moon': h.key==='Leader'?'fa-chess-king': h.key==='Healer'?'fa-hand-holding-heart': h.key==='Merchant'?'fa-coins': h.key==='Guardian'?'fa-shield': h.key==='Performer'?'fa-mask':'fa-scroll';
+      const card=document.createElement('div');
+      card.className=`bg-brand-purple p-4 rounded-lg flex items-center space-x-4 ${i===0?'shadow-purple-glow':''} border border-brand-light-purple/50`;
+      card.innerHTML=`
+        <div class="flex-shrink-0 bg-brand-light-purple w-12 h-12 rounded-full flex items-center justify-center">
+          <i class="fa-solid ${icon} text-2xl text-brand-light-gold"></i>
+        </div>
+        <div>
+          <p class="font-semibold">Shifted to ${h.type}</p>
+          <p class="text-xs text-brand-text-muted">${timeAgo(h.ts)} - ${h.reason || 'Signals updated'}.</p>
+        </div>`;
+      wrap.appendChild(card);
+    });
+  }
+
+  function renderTimeline() {
+    const list=$('timelineList'); list.innerHTML='';
+    const items=[...(app.archetypeHistory||[])].sort((a,b)=>b.ts-a.ts);
+    if(items.length===0){ list.innerHTML=`<div class="text-brand-text-muted text-sm">No timeline events yet.</div>`; return; }
+    items.forEach(h=>{
+      const row=document.createElement('div');
+      row.className='bg-brand-purple p-4 rounded-lg flex items-start gap-4 border border-brand-light-purple/50';
+      row.innerHTML=`
+        <div class="flex-shrink-0 bg-brand-light-purple w-10 h-10 rounded-full flex items-center justify-center">
+          <i class="fa-solid fa-clock text-brand-light-gold"></i>
+        </div>
+        <div class="flex-1">
+          <p class="font-semibold">${h.type} <span class="text-brand-text-muted font-normal">(${Math.round(h.confidence*100)}%)</span></p>
+          <p class="text-xs text-brand-text-muted mt-1">${h.reason || 'Signals updated'}</p>
+          <p class="text-xs text-brand-text-muted mt-1">${new Date(h.ts).toLocaleString()}</p>
+        </div>`;
+      list.appendChild(row);
+    });
+  }
+
+  function renderNotes() {
+    const list=$('notesList'); list.innerHTML='';
+    const notes=[...(app.notes||[])].sort((a,b)=>b.ts-a.ts);
+    if(notes.length===0){ list.innerHTML=`<div class="text-brand-text-muted text-sm">No notes yet. Add your first thought!</div>`; return; }
+    notes.forEach(n=>{
+      const item=document.createElement('div');
+      item.className='bg-brand-purple p-4 rounded-lg flex items-start gap-3 border border-brand-light-purple/50';
+      const topics=(n.topics||[]).map(t=>`<span class="chip mr-1 text-brand-light-gold">${t}</span>`).join(' ');
+      const mood=n.mood || (n.sentiment>0.2?'Positive': n.sentiment<-0.2?'Negative':'Neutral');
+      item.innerHTML=`
+        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-brand-light-purple flex items-center justify-center">
+          <i class="fa-solid fa-note-sticky text-brand-light-gold"></i>
+        </div>
+        <div class="flex-1">
+          <p class="text-sm">${escapeHtml(n.text)}</p>
+          <div class="mt-2 flex flex-wrap gap-2">${topics}</div>
+          <div class="mt-2 text-xs text-brand-text-muted">Mood: ${mood} • ${timeAgo(n.ts)}</div>
+        </div>
+        <button data-id="${n.id}" class="btn-delete-note text-brand-text-muted hover:text-brand-light-gold" title="Delete" type="button" aria-label="Delete note">
+          <i class="fa-solid fa-trash"></i>
+        </button>`;
+      list.appendChild(item);
+    });
+    list.querySelectorAll('.btn-delete-note').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const id = btn.getAttribute('data-id');
+        app.notes = app.notes.filter(n=>n.id!==id);
+        Store.save(app);
+        toast('Note deleted','success');
+        updateArchetypeAndRender();
+      });
+    });
+  }
+
+  function renderAnalyzePreview(tags=[]) {
+    const wrap=$('analyzeTags'); wrap.innerHTML='';
+    tags.forEach(t=>{ const span=document.createElement('span'); span.className='chip text-brand-light-gold'; span.textContent=t; wrap.appendChild(span); });
+  }
+
+  function timeAgo(ts){ const diff=Math.max(0, Date.now()-ts); const m=Math.floor(diff/60000), h=Math.floor(m/60), d=Math.floor(h/24); if(d>0) return d+' day'+(d>1?'s':'')+' ago'; if(h>0) return h+' hour'+(h>1?'s':'')+' ago'; if(m>0) return m+' min'+(m>1?'s':'')+' ago'; return 'just now'; }
+  function escapeHtml(s){ return (s||'').replace(/[&<>"']/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+
+  function updateArchetypeAndRender() {
+    const res = computeArchetype(app);
+    const changed = (!app.current) || app.current.type !== res.type || Math.abs((app.current.confidence||0)-res.confidence)>0.05;
+    app.current = { type: res.type, confidence: res.confidence, reason: res.reason, chips: res.chips, key: res.key };
+    if (changed) app.archetypeHistory.push({ type: res.type, key: res.key, confidence: res.confidence, reason: res.reason, ts: Date.now() });
+    Store.save(app);
+    renderPersona(); renderNotes(); renderTimeline();
+  }
+
+  // Tabs
+  tabs.persona.addEventListener('click', (e)=>{ e.preventDefault(); setActiveTab('persona'); });
+  tabs.timeline.addEventListener('click', (e)=>{ e.preventDefault(); setActiveTab('timeline'); });
+  tabs.notes.addEventListener('click', (e)=>{ e.preventDefault(); setActiveTab('notes'); });
+  tabs.analyze.addEventListener('click', (e)=>{ e.preventDefault(); setActiveTab('analyze'); });
+
+  // Modal open/close
+  $('btnAdd').addEventListener('click', openModal);
+  $('btnModalClose').addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); closeModal(); });
+  $('btnModalCancel').addEventListener('click', (e)=>{ e.preventDefault(); closeModal(); });
+
+  function openModal() {
+    const root = $('modalAddRoot');
+    root.classList.add('active');
+    setTimeout(()=> $('modalNoteText')?.focus(), 0);
+  }
+  function closeModal() {
+    const root = $('modalAddRoot');
+    root.classList.remove('active');
+    $('modalNoteText').value = '';
+    $('modalMood').value = '';
+    modalPhotoDataUrl = null;
+    $('modalPreview').classList.add('hidden-el');
+    $('modalImg').src = '';
+    const input = $('modalPhotoInput'); if (input) input.value = '';
+  }
+
+  // Фон модалки не закрывает — клики по нему блокируем, но не передаём в обработчики
+  const backdrop = $('modalBackdrop');
+  ['click','pointerup','touchend'].forEach(ev => {
+    backdrop.addEventListener(ev, (e)=>{ e.preventDefault(); e.stopPropagation(); }, { passive:false });
+  });
+  document.addEventListener('keydown', (e)=>{ if (e.key==='Escape') e.preventDefault(); });
+
+  // Photo: modal
+  let modalPhotoDataUrl = null;
+  $('modalPhotoInput').addEventListener('change', async (e)=>{
+    try {
+      const f = e.target.files && e.target.files[0];
+      if (!f) return;
+      if (!f.type.startsWith('image/')) { toast('Please choose an image file.','error'); e.target.value=''; return; }
+      const dataUrl = await fileToDataUrl(f);
+      modalPhotoDataUrl = dataUrl;
+      $('modalPreview').classList.remove('hidden-el');
+      $('modalImg').src = dataUrl;
+    } catch (err) { console.error(err); toast('Failed to load photo.','error'); }
+  });
+
+  $('btnModalSave').addEventListener('click', async ()=>{
+    try {
+      const text = $('modalNoteText').value.trim();
+      const mood = $('modalMood').value || '';
+      if (!text && !modalPhotoDataUrl) { toast('Add a note or a photo first.','error'); return; }
+      if (modalPhotoDataUrl) {
+        const p = await analyzeImageDataUrl(modalPhotoDataUrl);
+        const photoObj = { id:'p_'+cryptoRandom(), dataUrl:modalPhotoDataUrl, tags:p.tags, brightness:p.brightness, portrait:p.portrait, smile:p.smile, outdoors:p.outdoors, ts:Date.now() };
+        app.photos.push(photoObj);
+      }
+      if (text) {
+        const t = analyzeText(text);
+        const note = { id:'n_'+cryptoRandom(), text, topics:t.topics, sentiment:t.sentiment, mood, ts:Date.now() };
+        app.notes.push(note);
+      }
+      Store.save(app);
+      updateArchetypeAndRender();
+      toast('Saved successfully','success');
+      closeModal();
+      setActiveTab('persona');
+    } catch (err) { console.error(err); toast('Error while saving.','error'); }
+  });
+
+  // Notes screen
+  $('btnSaveNote').addEventListener('click', ()=>{
+    const text=$('noteText').value.trim(); const mood=$('noteMood').value||'';
+    if(!text){ toast('Note is empty.','error'); return; }
+    const t=analyzeText(text);
+    const note={ id:'n_'+cryptoRandom(), text, topics:t.topics, sentiment:t.sentiment, mood, ts:Date.now() };
+    app.notes.push(note);
+    $('noteText').value=''; $('noteMood').value='';
+    Store.save(app); updateArchetypeAndRender(); toast('Note saved','success'); setActiveTab('notes');
+  });
+
+  // Analyze screen
+  let analyzeDataUrl=null;
+  $('photoInput').addEventListener('change', async (e)=>{
+    try {
+      const f=e.target.files && e.target.files[0]; if(!f) return;
+      if(!f.type.startsWith('image/')){ toast('Please choose an image file.','error'); e.target.value=''; return; }
+      const dataUrl=await fileToDataUrl(f); analyzeDataUrl=dataUrl;
+      $('analyzePreview').classList.remove('hidden-el'); $('analyzeImg').src=dataUrl; renderAnalyzePreview([]);
+    } catch (err){ console.error(err); toast('Failed to load photo.','error'); }
+  });
+
+  $('btnAnalyze').addEventListener('click', async ()=>{
+    try {
+      if(!analyzeDataUrl){ toast('Upload a photo first.','error'); return; }
+      const p=await analyzeImageDataUrl(analyzeDataUrl);
+      renderAnalyzePreview(p.tags);
+      const photoObj={ id:'p_'+cryptoRandom(), dataUrl:analyzeDataUrl, tags:p.tags, brightness:p.brightness, portrait:p.portrait, smile:p.smile, outdoors:p.outdoors, ts:Date.now() };
+      app.photos.push(photoObj);
+      Store.save(app); updateArchetypeAndRender(); toast('Photo analyzed','success');
+    } catch(err){ console.error(err); toast('Photo analysis failed.','error'); }
+  });
+
+  function cryptoRandom(){ try{ if(window.crypto?.getRandomValues){ const arr=new Uint32Array(2); crypto.getRandomValues(arr); return Array.from(arr).map(n=>n.toString(16)).join(''); } } catch{} return Math.random().toString(16).slice(2)+Date.now().toString(16); }
+  function fileToDataUrl(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=()=>rej(new Error('File read error')); r.readAsDataURL(file); }); }
+
+  // Init
+  updateArchetypeAndRender(); setActiveTab('persona');
+
+  // Prevent external navigation
+  (function(){ function blockEvent(e){ e?.preventDefault?.(); e?.stopPropagation?.(); e?.stopImmediatePropagation?.(); return false; }
+    document.addEventListener('click', function(e){ const a=e.target?.closest?.('a[href]'); if(!a) return; const href=a.getAttribute('href')||''; if(href.startsWith('#')) return; return blockEvent(e); }, true);
+    document.addEventListener('submit', function(e){ return blockEvent(e); }, true);
+    try{ window.open=function(){ return null }; }catch(_){}
+  })();
+</script>
+
+
+</body></html>
