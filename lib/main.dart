@@ -453,7 +453,7 @@ class CaptainHarbor extends StatefulWidget {
 class _CaptainHarborState extends State<CaptainHarbor> with WidgetsBindingObserver {
   late InAppWebViewController _pier;
   bool _spinWheel = false;
-  final String _homePort = "https://sprt.spiritinmydream.online/";
+  final String _homePort = "https://spp.spiritinmydream.online/";
   final Quartermaster _qm = Quartermaster();
   final ConsigliereCaptain _capo = ConsigliereCaptain();
 
