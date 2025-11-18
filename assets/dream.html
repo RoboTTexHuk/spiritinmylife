@@ -1,4 +1,8 @@
-<!DOCTYPE html><html lang="ru"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<!DOCTYPE html>
+<html lang="ru" class="theme-dark">
+<head>
+  <meta name="x-poe-datastore-behavior" content="local_only">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
   <meta name="x-poe-datastore-behavior" content="local_only">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
   <meta charset="UTF-8">
@@ -7,7 +11,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&amp;family=Poppins:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script>window.FontAwesomeConfig={autoReplaceSvg:'nest'};</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
@@ -35,6 +39,68 @@
   <style>
     :root {
       color-scheme: dark;
+      --font-scale: 1;
+      --brand-bg: #1A182E;
+      --brand-dark: #1A182E;
+      --brand-card: #2E2A5C;
+      --brand-panel: #2E2A5C;
+      --brand-purple: #2E2A5C;
+      --brand-purple-50: rgba(46,42,92,0.5);
+      --brand-purple-60: rgba(46,42,92,0.6);
+      --brand-purple-80: rgba(46,42,92,0.8);
+      --brand-light-purple: #4D478D;
+      --brand-light-purple-50: rgba(77,71,141,0.5);
+      --brand-border-strong: #4D478D;
+      --brand-border: rgba(77,71,141,0.5);
+      --brand-gold: #D98E3A;
+      --brand-light-gold: #F0B86E;
+      --brand-text: #E0DDF2;
+      --brand-text-muted: #A09CB9;
+      --brand-btn-text: #1A182E;
+    }
+
+    body.theme-light {
+      color-scheme: light;
+      --brand-bg: #F8F6FF;
+      --brand-dark: #F8F6FF;
+      --brand-card: #FFFFFF;
+      --brand-panel: #FFFFFF;
+      --brand-purple: #E3DFFF;
+      --brand-purple-50: rgba(227,223,255,0.7);
+      --brand-purple-60: rgba(227,223,255,0.85);
+      --brand-purple-80: rgba(227,223,255,0.95);
+      --brand-light-purple: #C1B8FF;
+      --brand-light-purple-50: rgba(193,184,255,0.6);
+      --brand-border-strong: #9C8BFF;
+      --brand-border: rgba(156,139,255,0.55);
+      --brand-gold: #D98E3A;
+      --brand-light-gold: #F7C982;
+      --brand-text: #24174B;
+      --brand-text-muted: #6B5C99;
+      --brand-btn-text: #1A182E;
+    }
+
+    body {
+      background: var(--brand-bg);
+      font-size: calc(16px * var(--font-scale));
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .text-brand-text { color: var(--brand-text) !important; }
+    .text-brand-text-muted { color: var(--brand-text-muted) !important; }
+    .text-brand-light-gold { color: var(--brand-light-gold) !important; }
+    .bg-brand-dark { background-color: var(--brand-dark) !important; }
+    .bg-brand-purple { background-color: var(--brand-purple) !important; }
+    .bg-brand-light-purple { background-color: var(--brand-light-purple) !important; }
+    .bg-brand-purple\/50 { background-color: var(--brand-purple-50) !important; }
+    .bg-brand-purple\/60 { background-color: var(--brand-purple-60) !important; }
+    .bg-brand-purple\/80 { background-color: var(--brand-purple-80) !important; }
+    .bg-brand-dark\/60 { background-color: rgba(26,24,46,0.6) !important; }
+    body.theme-light .bg-brand-dark\/60 { background-color: rgba(248,246,255,0.8) !important; }
+    .border-brand-light-purple { border-color: var(--brand-border-strong) !important; }
+    .border-brand-light-purple\/50 { border-color: var(--brand-border) !important; }
+
+    :root {
       --app-max-width: 420px;
       --nav-height: 80px;
       --pad-h: 16px;
@@ -49,30 +115,44 @@
     * { -webkit-tap-highlight-color: transparent; }
     ::-webkit-scrollbar { display: none; }
     .text-glow { text-shadow: 0 0 8px rgba(240,184,110,0.5); }
-    .active-tab { color: #F0B86E !important; }
+    .active-tab { color: var(--brand-light-gold) !important; }
     .hidden-el { display: none !important; }
-    .chip { border: 1px solid rgba(240,184,110,0.35); border-radius: 9999px; padding: 2px 10px; font-size: 12px; }
-    .btn-gold { background-image: linear-gradient(to right, #D98E3A, #F0B86E); color: #1A182E; }
+    .chip {
+      border: 1px solid rgba(240,184,110,0.35);
+      border-radius: 9999px;
+      padding: 2px 10px;
+      font-size: 12px;
+      color: var(--brand-light-gold);
+    }
+    .btn-gold {
+      background-image: linear-gradient(to right, var(--brand-gold), var(--brand-light-gold));
+      color: var(--brand-btn-text);
+      transition: box-shadow .2s ease;
+    }
     .btn-gold:hover { box-shadow: 0 0 15px 5px rgba(217,142,58,0.3); }
     .pressable:active { transform: translateY(1px); opacity: 0.95; }
-    body { background: #1A182E; }
-    #app-root {
-      position: relative;
-      height: 100dvh; min-height: 100dvh; width: 100%;
-      display: flex; justify-content: center; align-items: stretch;
-      padding-left: max(0px, env(safe-area-inset-left));
-      padding-right: max(0px, env(safe-area-inset-right));
-      padding-top: max(0px, env(safe-area-inset-top));
-      padding-bottom: max(0px, env(safe-area-inset-bottom));
-    }
     #mobile-app-container {
       position: relative;
       width: 100%;
       max-width: var(--app-max-width);
-      background: #1A182E;
+      background: var(--brand-dark);
       box-shadow: 0 12px 40px rgba(0,0,0,.45);
       border-radius: 16px;
       overflow: hidden;
+      transition: background .3s ease;
+    }
+    #app-root {
+      position: relative;
+      height: 100dvh;
+      min-height: 100dvh;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      padding-left: max(0px, env(safe-area-inset-left));
+      padding-right: max(0px, env(safe-area-inset-right));
+      padding-top: max(0px, env(safe-area-inset-top));
+      padding-bottom: max(0px, env(safe-area-inset-bottom));
     }
     #main-content {
       position: relative;
@@ -90,70 +170,138 @@
       width: 100%;
       max-width: var(--app-max-width);
       z-index: 40;
-      background: rgba(46,42,92,0.8);
+      background: var(--brand-purple-80);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-top: 1px solid rgba(77,71,141,0.5);
+      border-top: 1px solid var(--brand-border);
       border-top-left-radius: 16px;
       border-top-right-radius: 16px;
+      transition: background .3s ease, border-color .3s ease;
     }
     #bottom-nav .nav-inner { height: var(--nav-height); }
     #toaster {
-      position: fixed; left: 50%; transform: translateX(-50%);
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
       bottom: calc(var(--nav-height) + env(safe-area-inset-bottom) + 8px);
-      z-index: 50; display: flex; flex-direction: column; gap: 8px;
-      width: min(92vw, 420px); pointer-events: none;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: min(92vw, 420px);
+      pointer-events: none;
     }
     .toast {
       pointer-events: auto;
       border: 1px solid rgba(240,184,110,.4);
       background: rgba(46,42,92,.95);
-      color: #E0DDF2;
-      padding: 10px 12px; border-radius: 10px;
-      display: flex; align-items: center; gap: 10px;
+      color: var(--brand-text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
       box-shadow: 0 6px 20px rgba(0,0,0,.35);
-      transition: opacity .2s ease, transform .2s ease;
+      transition: opacity .2s ease, transform .2s ease, background .3s ease;
     }
+    body.theme-light .toast { background: rgba(233,229,255,0.95); border-color: rgba(217,142,58,0.5); }
     .toast-success { border-color: rgba(57,201,114,.5); }
     .toast-error { border-color: rgba(244,67,54,.55); }
 
-    /* Модалка вынесена в конец body и имеет самый высокий z-index */
     #modalAddRoot {
-      position: fixed; inset: 0; z-index: 999; /* выше, чем bottom-nav (40) и тосты (50) */
+      position: fixed;
+      inset: 0;
+      z-index: 999;
       display: none;
     }
     #modalAddRoot.active { display: flex; }
-
-    /* Фон модалки НЕ принимает клики (как просили: не закрывает и не перехватывает) */
     #modalBackdrop {
-      position: absolute; inset: 0; background: rgba(0,0,0,0.6);
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
       pointer-events: none;
     }
     #modalSheet {
       position: relative;
-      width: 100%; max-width: 420px;
-      margin-left: auto; margin-right: auto;
-      background: #2E2A5C;
-      border-top-left-radius: 16px; border-top-right-radius: 16px;
-      border-top: 1px solid rgba(77,71,141,0.5);
+      width: 100%;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+      background: var(--brand-panel);
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      border-top: 1px solid var(--brand-border);
       padding: 16px;
       box-shadow: 0 -12px 30px rgba(0,0,0,.45);
       transform: translateY(0);
+      transition: background .3s ease, border-color .3s ease;
     }
-    /* Контейнер расположения модалки внизу, с учётом safe-area */
     #modalAddRoot .sheet-wrap {
-      position: absolute; left: 0; right: 0;
+      position: absolute;
+      left: 0;
+      right: 0;
       bottom: max(0px, env(safe-area-inset-bottom));
-      display: flex; justify-content: center; align-items: flex-end;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
       padding: 0 12px;
+    }
+
+    .setting-card {
+      background: var(--brand-panel);
+      border: 1px solid var(--brand-border);
+      border-radius: 16px;
+      padding: 16px;
+      transition: background .3s ease, border-color .3s ease;
+    }
+
+    .switch {
+      position: relative;
+      width: 54px;
+      height: 28px;
+      border-radius: 999px;
+      background: var(--brand-border);
+      transition: background .2s ease;
+      cursor: pointer;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .switch-thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--brand-light-gold);
+      transition: transform .2s ease;
+    }
+    .switch input:checked + .switch-thumb {
+      transform: translateX(26px);
+    }
+
+    .range-slider {
+      width: 100%;
+      accent-color: var(--brand-light-gold);
+    }
+
+    .settings-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .setting-label {
+      font-size: 0.9rem;
+      color: var(--brand-text-muted);
     }
   </style>
   <script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.3f7572448765332f3047.js"></script>
-  <script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.3f7572448765332f3047.js"></script></head>
-<body class="font-body text-brand-text">
+  <script src="https://puc.poecdn.net/authenticated_preview_page/syncedState.3f7572448765332f3047.js"></script>
+</head>
+<body class="font-body text-brand-text theme-dark">
 <div id="app-root">
   <div id="mobile-app-container" class="mx-auto bg-brand-dark overflow-hidden relative rounded-lg">
-
     <main id="main-content" class="h-full overflow-y-auto">
       <header id="header" class="flex justify-between items-center px-[var(--pad-h)] pt-6 pb-4 bg-brand-dark/80 backdrop-blur-sm sticky top-0 z-10">
         <div class="flex items-center space-x-3"></div>
@@ -249,9 +397,52 @@
         </div>
       </section>
 
+      <section id="screen-settings" class="px-[var(--pad-h)] py-6 hidden-el">
+        <div class="flex items-center justify-between">
+          <h3 class="font-display text-xl font-bold">Settings</h3>
+          <button id="btnSettingsClose" class="text-brand-text-muted hover:text-brand-light-gold" type="button" aria-label="Close settings">
+            <i class="fa-solid fa-xmark text-2xl"></i>
+          </button>
+        </div>
+        <p class="text-brand-text-muted text-sm mt-1">Personalize the app's theme and readability.</p>
+        <div class="setting-card mt-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-semibold text-brand-text">Interface theme</p>
+              <p class="setting-label">Toggle between dark and light mode.</p>
+            </div>
+            <div class="settings-row">
+              <label class="text-sm font-semibold text-brand-text flex items-center gap-2">
+                <span>Dark</span>
+                <label class="switch">
+                  <input type="checkbox" id="themeToggle">
+                  <span class="switch-thumb"></span>
+                </label>
+                <span>light</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="setting-card mt-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-semibold text-brand-text">Font size</p>
+              <p class="setting-label">Fine-tuning for comfortable reading.</p>
+            </div>
+            <div class="text-brand-light-gold font-semibold" id="fontSizeLabel">100%</div>
+          </div>
+          <input id="fontSizeRange" type="range" min="0.9" max="1.2" step="0.05" class="range-slider mt-4">
+        </div>
+
+        <div class="setting-card mt-4">
+          <p class="font-semibold text-brand-text">Preservation</p>
+          <p class="setting-label">All changes are applied instantly and saved locally.</p>
+          <button id="btnSettingsSave" class="w-full mt-4 btn-gold rounded-md py-3 font-bold pressable" type="button">Готово</button>
+        </div>
+      </section>
     </main>
 
-    <!-- Bottom Navigation -->
     <nav id="bottom-nav" class="bg-brand-purple/80">
       <div class="nav-inner flex justify-around items-center px-3">
         <a href="#persona" id="tab-persona" class="text-center text-brand-light-gold group" aria-label="Persona">
@@ -274,11 +465,9 @@
     </nav>
 
     <div id="toaster"></div>
-
   </div>
 </div>
 
-<!-- МОДАЛКА В КОНЕЦ BODY: ВСЕГДА НАД BOTTOM NAV -->
 <div id="modalAddRoot" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div id="modalBackdrop"></div>
   <div class="sheet-wrap">
@@ -316,7 +505,6 @@
 </div>
 
 <script>
-  // Toast
   function toast(msg, type='info', ms=2000) {
     const t = document.createElement('div');
     t.className = 'toast ' + (type==='success'?'toast-success': type==='error'?'toast-error':'');
@@ -329,7 +517,6 @@
     setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateY(6px)'; setTimeout(()=>t.remove(),250); }, ms);
   }
 
-  // Safe store
   const SafeStore = (() => {
     let enabled = false;
     try { const k='__t__'+Math.random(); localStorage.setItem(k,'1'); localStorage.removeItem(k); enabled = true; } catch {}
@@ -352,6 +539,7 @@
       if (!d.photos) d.photos = [];
       if (!d.archetypeHistory) d.archetypeHistory = [];
       if (!d.current) d.current = { type: 'The Mystic', confidence: 0.88, reason: 'Introspection notes and serene photos', chips: ['spirituality','introspection'], key:'Mystic' };
+      if (!d.settings) d.settings = { theme: 'dark', fontScale: 1 };
       this.save(d);
       return d;
     }
@@ -462,6 +650,7 @@
     notes: $('screen-notes'),
     analyze: $('screen-analyze')
   };
+  const settingsScreen = $('screen-settings');
   const tabs = {
     persona: $('tab-persona'),
     timeline: $('tab-timeline'),
@@ -470,23 +659,39 @@
   };
 
   let app = Store.init();
+  let activeTab = 'persona';
+  let previousTabBeforeSettings = 'persona';
 
   function setActiveTab(which) {
+    activeTab = which;
     Object.values(screens).forEach(s=>s.classList.add('hidden-el'));
     screens[which].classList.remove('hidden-el');
+    settingsScreen.classList.add('hidden-el');
     Object.values(tabs).forEach(t=>t.classList.remove('active-tab'));
     tabs[which].classList.add('active-tab');
     if (which==='persona') renderPersona();
     if (which==='timeline') renderTimeline();
     if (which==='notes') renderNotes();
+    if (which==='analyze') renderAnalyzePreview();
+  }
+
+  function openSettingsScreen() {
+    previousTabBeforeSettings = activeTab;
+    Object.values(screens).forEach(s=>s.classList.add('hidden-el'));
+    Object.values(tabs).forEach(t=>t.classList.remove('active-tab'));
+    settingsScreen.classList.remove('hidden-el');
+    updateSettingsUI();
+  }
+
+  function closeSettingsScreen() {
+    settingsScreen.classList.add('hidden-el');
+    setActiveTab(previousTabBeforeSettings || 'persona');
   }
 
   function renderPersona() {
-    // опционально: имя пользователю
-    // $('username') может отсутствовать в DOM — просто игнор
-    const c = app.current;
-    $('personaTitle').textContent = c.type;
-    $('personaDesc').textContent = c.reason ? `Signals suggest ${c.type.toLowerCase()}: ${c.reason}.` : 'Your signals are forming.';
+    const c = app.current || {};
+    $('personaTitle').textContent = c.type || 'The Mystic';
+    $('personaDesc').textContent = c.reason ? `Signals suggest ${c.type?.toLowerCase?.() || 'this path'}: ${c.reason}.` : 'Your signals are forming.';
     $('personaConfidence').textContent = `${Math.round((c.confidence||0.7)*100)}% Confidence`;
     const chipsWrap = $('personaChips'); chipsWrap.innerHTML = '';
     (c.chips||[]).forEach(ch=>{ const span=document.createElement('span'); span.className='chip text-brand-light-gold'; span.textContent=ch; chipsWrap.appendChild(span); });
@@ -571,7 +776,8 @@
   }
 
   function renderAnalyzePreview(tags=[]) {
-    const wrap=$('analyzeTags'); wrap.innerHTML='';
+    const wrap=$('analyzeTags'); if(!wrap) return; wrap.innerHTML='';
+    if(!tags.length) return;
     tags.forEach(t=>{ const span=document.createElement('span'); span.className='chip text-brand-light-gold'; span.textContent=t; wrap.appendChild(span); });
   }
 
@@ -579,6 +785,7 @@
   function escapeHtml(s){ return (s||'').replace(/[&<>"']/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
 
   function updateArchetypeAndRender() {
+    if (!app.archetypeHistory) app.archetypeHistory = [];
     const res = computeArchetype(app);
     const changed = (!app.current) || app.current.type !== res.type || Math.abs((app.current.confidence||0)-res.confidence)>0.05;
     app.current = { type: res.type, confidence: res.confidence, reason: res.reason, chips: res.chips, key: res.key };
@@ -587,13 +794,54 @@
     renderPersona(); renderNotes(); renderTimeline();
   }
 
-  // Tabs
+  function applyTheme(theme, { skipSave=false } = {}) {
+    document.body.classList.remove('theme-dark','theme-light');
+    document.body.classList.add(theme === 'light' ? 'theme-light' : 'theme-dark');
+    document.documentElement.classList.remove('theme-dark','theme-light');
+    document.documentElement.classList.add(theme === 'light' ? 'theme-light' : 'theme-dark');
+    if (!skipSave) {
+      app.settings.theme = theme;
+      Store.save(app);
+    }
+    const toggle = $('themeToggle');
+    if (toggle) toggle.checked = (theme === 'light');
+  }
+
+  function applyFontScale(scale, { skipSave=false } = {}) {
+    const value = Math.min(1.2, Math.max(0.9, scale));
+    document.documentElement.style.setProperty('--font-scale', value);
+    if (!skipSave) {
+      app.settings.fontScale = value;
+      Store.save(app);
+    }
+    if ($('fontSizeRange')) $('fontSizeRange').value = value;
+    if ($('fontSizeLabel')) $('fontSizeLabel').textContent = `${Math.round(value*100)}%`;
+  }
+
+  function updateSettingsUI() {
+    if ($('themeToggle')) $('themeToggle').checked = app.settings.theme === 'light';
+    if ($('fontSizeRange')) $('fontSizeRange').value = app.settings.fontScale || 1;
+    if ($('fontSizeLabel')) $('fontSizeLabel').textContent = `${Math.round((app.settings.fontScale||1)*100)}%`;
+  }
+
   tabs.persona.addEventListener('click', (e)=>{ e.preventDefault(); setActiveTab('persona'); });
   tabs.timeline.addEventListener('click', (e)=>{ e.preventDefault(); setActiveTab('timeline'); });
   tabs.notes.addEventListener('click', (e)=>{ e.preventDefault(); setActiveTab('notes'); });
   tabs.analyze.addEventListener('click', (e)=>{ e.preventDefault(); setActiveTab('analyze'); });
+  $('btnSettings').addEventListener('click', (e)=>{ e.preventDefault(); openSettingsScreen(); });
+  $('btnSettingsClose').addEventListener('click', (e)=>{ e.preventDefault(); closeSettingsScreen(); });
+  $('btnSettingsSave').addEventListener('click', (e)=>{ e.preventDefault(); closeSettingsScreen(); toast('Настройки сохранены','success'); });
 
-  // Modal open/close
+  $('themeToggle').addEventListener('change', (e)=> {
+    applyTheme(e.target.checked ? 'light' : 'dark');
+    toast(`Тема переключена на ${e.target.checked ? 'светлую' : 'тёмную'}`, 'success');
+  });
+
+  $('fontSizeRange').addEventListener('input', (e)=> {
+    const value = parseFloat(e.target.value);
+    applyFontScale(value);
+  });
+
   $('btnAdd').addEventListener('click', openModal);
   $('btnModalClose').addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); closeModal(); });
   $('btnModalCancel').addEventListener('click', (e)=>{ e.preventDefault(); closeModal(); });
@@ -614,14 +862,12 @@
     const input = $('modalPhotoInput'); if (input) input.value = '';
   }
 
-  // Фон модалки не закрывает — клики по нему блокируем, но не передаём в обработчики
   const backdrop = $('modalBackdrop');
   ['click','pointerup','touchend'].forEach(ev => {
     backdrop.addEventListener(ev, (e)=>{ e.preventDefault(); e.stopPropagation(); }, { passive:false });
   });
   document.addEventListener('keydown', (e)=>{ if (e.key==='Escape') e.preventDefault(); });
 
-  // Photo: modal
   let modalPhotoDataUrl = null;
   $('modalPhotoInput').addEventListener('change', async (e)=>{
     try {
@@ -658,7 +904,6 @@
     } catch (err) { console.error(err); toast('Error while saving.','error'); }
   });
 
-  // Notes screen
   $('btnSaveNote').addEventListener('click', ()=>{
     const text=$('noteText').value.trim(); const mood=$('noteMood').value||'';
     if(!text){ toast('Note is empty.','error'); return; }
@@ -669,7 +914,6 @@
     Store.save(app); updateArchetypeAndRender(); toast('Note saved','success'); setActiveTab('notes');
   });
 
-  // Analyze screen
   let analyzeDataUrl=null;
   $('photoInput').addEventListener('change', async (e)=>{
     try {
@@ -694,16 +938,23 @@
   function cryptoRandom(){ try{ if(window.crypto?.getRandomValues){ const arr=new Uint32Array(2); crypto.getRandomValues(arr); return Array.from(arr).map(n=>n.toString(16)).join(''); } } catch{} return Math.random().toString(16).slice(2)+Date.now().toString(16); }
   function fileToDataUrl(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=()=>rej(new Error('File read error')); r.readAsDataURL(file); }); }
 
-  // Init
-  updateArchetypeAndRender(); setActiveTab('persona');
+  function initSettings() {
+    applyTheme(app.settings.theme || 'dark', { skipSave:true });
+    applyFontScale(app.settings.fontScale || 1, { skipSave:true });
+    updateSettingsUI();
+  }
 
-  // Prevent external navigation
-  (function(){ function blockEvent(e){ e?.preventDefault?.(); e?.stopPropagation?.(); e?.stopImmediatePropagation?.(); return false; }
+  function preventExternalNav(){
+    function blockEvent(e){ e?.preventDefault?.(); e?.stopPropagation?.(); e?.stopImmediatePropagation?.(); return false; }
     document.addEventListener('click', function(e){ const a=e.target?.closest?.('a[href]'); if(!a) return; const href=a.getAttribute('href')||''; if(href.startsWith('#')) return; return blockEvent(e); }, true);
     document.addEventListener('submit', function(e){ return blockEvent(e); }, true);
     try{ window.open=function(){ return null }; }catch(_){}
-  })();
+  }
+
+  updateArchetypeAndRender();
+  initSettings();
+  setActiveTab('persona');
+  preventExternalNav();
 </script>
-
-
-</body></html>
+</body>
+</html>
